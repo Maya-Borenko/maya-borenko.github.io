@@ -101,6 +101,13 @@ function createNewsDots() {
     if (!dotsContainer) return;
     
     dotsContainer.innerHTML = '';
+
+    if (newsData.length <= 1) {
+        dotsContainer.style.display = 'none';
+        return;
+    } else {
+        dotsContainer.style.display = 'flex';
+    }
     
     for (let i = 0; i < newsData.length; i++) {
         const dot = document.createElement('div');
@@ -119,6 +126,7 @@ function createNewsDots() {
 }
 
 function updateNewsDots() {
+    if (newsData.length <= 1) return;
     const dots = document.querySelectorAll('.news-slider-dot');
     dots.forEach((dot, index) => {
         if (index === currentNewsIndex) {
@@ -130,6 +138,7 @@ function updateNewsDots() {
 }
 
 function goToNews(index) {
+    if (newsData.length <= 1) return;
     if (index < 0 || index >= newsData.length || isAnimating) return;
     
     currentNewsIndex = index;
@@ -138,7 +147,7 @@ function goToNews(index) {
 }
 
 function nextNews() {
-    if (newsData.length === 0 || isAnimating) return;
+    if (newsData.length <= 1 || isAnimating) return;
     
     isAnimating = true;
     slideNewsDown(() => {
@@ -149,6 +158,11 @@ function nextNews() {
 }
 
 function slideNewsDown(callback) {
+    if (newsData.length <= 1) {
+        if (callback) callback();
+        return;
+    }
+    
     const newsCard = document.getElementById('newsCard');
     const titleElement = document.getElementById('newsTitle');
     
@@ -233,6 +247,10 @@ function slideNewsDown(callback) {
 }
 
 function startNewsSlider() {
+    if (newsData.length <= 1) {
+        console.log('Слайдер не запущен: недостаточно новостей');
+        return;
+    }
     stopNewsSlider();
     newsInterval = setInterval(nextNews, NEWS_INTERVAL);
 }
@@ -245,6 +263,7 @@ function stopNewsSlider() {
 }
 
 function restartNewsSlider() {
+    if (newsData.length <= 1) return;
     stopNewsSlider();
     setTimeout(startNewsSlider, NEWS_INTERVAL);
 }
@@ -286,14 +305,18 @@ async function initNews() {
         
         createNewsDots();
         displayCurrentNews();
-        startNewsSlider();
+        if (newsData.length > 1) {
+            startNewsSlider();
+        }
         
     } catch (error) {
         console.error('Ошибка при загрузке новостей:', error);
         newsData = getTestNews();
         createNewsDots();
         displayCurrentNews();
-        startNewsSlider();
+        if (newsData.length > 1) {
+            startNewsSlider();
+        }
     }
 }
 
@@ -302,8 +325,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const newsCard = document.getElementById('newsCard');
     if (newsCard) {
-        newsCard.addEventListener('mouseenter', stopNewsSlider);
-        newsCard.addEventListener('mouseleave', startNewsSlider);
+        if (newsData.length > 1) {
+            newsCard.addEventListener('mouseenter', stopNewsSlider);
+            newsCard.addEventListener('mouseleave', startNewsSlider);
+        }
     }
 });
 
