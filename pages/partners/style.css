@@ -74,7 +74,7 @@ body {
 
 .header-name {
     width: auto;
-    max-width: 65vw;
+    max-width: 80vw;
     margin-bottom: 10px;
 }
 .header-logo {
@@ -409,7 +409,7 @@ body {
     display: flex;
     flex-direction: column;
     grid-template-columns: 2fr 1.1fr;
-    max-width:450px;
+    max-width: 40%;
 }
 
 .partners-block {
