@@ -158,12 +158,12 @@ body {
 }
 
 .time-weekday {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 500;
 }
 
 .time-fulldate {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 200;
     text-align: left;
 }
