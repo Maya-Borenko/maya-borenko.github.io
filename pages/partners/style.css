@@ -75,12 +75,10 @@ body {
 .header-name {
     width: auto;
     max-width: 80vw;
-    margin-bottom: 10px;
 }
 .header-logo {
     width: auto;
-    max-width: 15vw;
-    margin-bottom: 10px;
+    max-width: 18vw;
 }
 
 .main-blocks {
@@ -404,12 +402,12 @@ body {
 
 /* Партнёры + QR */
 .main-zone {
+    width:37%;
     margin-top: 55px;
     gap:15px;
     display: flex;
     flex-direction: column;
     grid-template-columns: 2fr 1.1fr;
-    max-width: 40%;
 }
 
 .partners-block {
@@ -429,7 +427,7 @@ body {
 .partners-slider {
     overflow: hidden;
     position: relative;
-    height:250px;
+    height:220px;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.65);
 }
