@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Детский технопарк «Альтаир»</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="bg-word"></div>
+
+    <div class="page">
+        <div class="header">
+            <div class="header-left" id="mainTitleCard">
+                <img class="header-name" src="./img/header-head.png" alt="Заголовок красивый" />
+                <img class="header-logo" src="./img/logo.png"/>
+            </div>
+        </div>
+        <div class="main-blocks">
+
+        <div class="row-style">
+            <div class="news-block">
+                <div class="news-title">
+                    <img src="./img/header-info.png" alt="Партнёры" />
+                </div>
+                <div class="news-card" id="newsCard">
+                    <div class="news-content" id="newsAnimationContainer">
+                        <h3 class="news-card-title" id="newsTitle">Загрузка новостей...</h3>
+                    </div>
+                    <div class="news-slider-dots" id="newsSliderDots">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="partners-block">
+                <div class="partners-header">
+                    <img src="./img/header-partners.png" alt="Партнёры" />
+                </div>
+
+                <div class="partners-slider" id="partnersSlider">
+                    <div class="partners-content">
+                        <div class="partners-track" id="partnersTrack"></div>
+                        <div class="slider-dots" id="sliderDots"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-zone">
+            <div class="weather-time-wrapper">
+                <div class="time-card">
+                    <div class="time-big" id="time">10:30</div>
+                    <div class="time-date">
+                        <div class="time-weekday" id="weekdayText">Понедельник</div>
+                        <div class="time-fulldate" id="fulldate">24 ноября</div>
+                    </div>
+                </div>
+
+                <div class="weather-card">
+                    <div class="weather-main-row">
+                        <div class="weather-icon">
+                            <img src="./img/weather-icon.png" alt="Погода" />
+                        </div>
+                        <div class="weather-main">
+                            <div class="weather-temp" id="weather-temp">--</div>
+                            <div class="weather-feel" id="weather-feel"></div>
+                        </div>
+                        <div class="sun-block">
+                            <div class="sun-row">
+                                Восход:
+                                <span class="sun-time" id="sunrise">--:--</span>
+                            </div>
+                            <div class="sun-row">
+                                Закат:
+                                <span class="sun-time" id="sunset">--:--</span>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="weather-footer">
+                        <div class="weather-item">
+                            <b>Ветер</b><br />
+                            <span id="weather-wind">--</span>
+                        </div>
+                        <div class="weather-item">
+                            <b>Давление</b><br />
+                            <span id="weather-pressure">--</span>
+                        </div>
+                        <div class="weather-item">
+                            <b>Влажность</b><br />
+                            <span id="weather-humidity">--</span>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="qr-stack">
+                <img src="./img/QR-код-тг.png" alt="QR Telegram" class="qr-img">
+                <img src="./img/QR-коды-сайт.png" alt="QR Сайт" class="qr-img">
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="modal-bg" id="modal-bg">
+        <div class="modal-window">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <div class="modal-title" id="modal-title"></div>
+            <div class="modal-text" id="modal-text"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="newsParser.js"></script>
+</body>
+</html>
