@@ -197,8 +197,6 @@ function slideNewsDown(callback) {
     currentDiv.style.padding = '20px';
     currentDiv.style.boxSizing = 'border-box';
     currentDiv.style.display = 'flex';
-    currentDiv.style.alignItems = 'center';
-    currentDiv.style.justifyContent = 'center';
     currentDiv.style.transform = 'translateY(0)';
     currentDiv.style.transition = `transform ${ANIMATION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
     
@@ -214,8 +212,6 @@ function slideNewsDown(callback) {
     nextDiv.style.padding = '20px';
     nextDiv.style.boxSizing = 'border-box';
     nextDiv.style.display = 'flex';
-    nextDiv.style.alignItems = 'center';
-    nextDiv.style.justifyContent = 'center';
     nextDiv.style.transform = 'translateY(0)';
     nextDiv.style.transition = `transform ${ANIMATION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
     
