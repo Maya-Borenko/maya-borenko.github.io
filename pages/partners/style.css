@@ -230,7 +230,7 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    font-size: 18px;
+    font-size: 16px;
     background: rgba(255, 255, 255, 0.65);
     color: #000;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
@@ -262,7 +262,7 @@ body {
 }
 
 .weather-item img {
-    width: 13px;
+    width: 15px;
 }
 
 .weather-item b {
@@ -434,7 +434,7 @@ body {
     overflow: hidden;
     position: relative;
     width: 747px;
-    height:236px;
+    height:220x;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.65);
 }
@@ -521,7 +521,7 @@ body {
 .partner-cell {
     flex: 0 0 160px;
     max-width: max-content;
-    height: 216px;
+    height: 200px;
     padding: 15px 5px;
     text-align: center;
     cursor: pointer;
