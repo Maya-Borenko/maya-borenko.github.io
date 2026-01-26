@@ -9,20 +9,20 @@ window.addEventListener("resize", syncHeaderBlocks);
 window.addEventListener("DOMContentLoaded", syncHeaderBlocks);
 
 const partnersAll = [
-    { src: "./img/partners/rostec.jpg", alt: "Ростех", name: "Ростех", key: "rostec" },
+    { src: "./img/partners/rostec.jpg", alt: "Госкорпорация Ростех", name: "Госкорпорация Ростех", key: "rostec" },
     { src: "./img/partners/rosatom.jpg", alt: "Росатом", name: "Росатом", key: "rosatom" },
-    { src: "./img/partners/samsung.png", alt: "IT Школа", name: "IT Школа", key: "it_school" },
-    { src: "./img/partners/yandex.jpg", alt: "Яндекс Лицей", name: "Яндекс", key: "yandex_lyceum" },
-    { src: "./img/partners/1C.jpg", alt: "1C", name: "1C", key: "1c" },
+    { src: "./img/partners/samsung.png", alt: "IT-школа Samsung", name: "IT-школа Samsung", key: "it_school" },
+    { src: "./img/partners/yandex.jpg", alt: "Яндекс.Лицей", name: "Яндекс.Лицей", key: "yandex_lyceum" },
+    { src: "./img/partners/1C.jpg", alt: "Фирма 1С", name: "Фирма 1С", key: "1c" },
     { src: "./img/partners/croc.jpg", alt: "КРОК", name: "КРОК", key: "krok" },
-    { src: "./img/partners/astra.jpg", alt: "Астра", name: "Астра", key: "astra" },
+    { src: "./img/partners/astra.jpg", alt: "Группа Астра", name: "Группа Астра", key: "astra" },
     { src: "./img/partners/sibur.png", alt: "Сибур", name: "Сибур", key: "sibur" },
     { src: "./img/partners/generium.png", alt: "Генериум", name: "Генериум", key: "generium" },
-    { src: "./img/partners/rosel.png", alt: "Росэл", name: "Росэл", key: "roselectronic" },
+    { src: "./img/partners/rosel.png", alt: "Росэлектроника", name: "Росэлектроника", key: "roselectronic" },
     { src: "./img/partners/ascon.jpg", alt: "Аскон", name: "Аскон", key: "ascon" },
     { src: "./img/partners/roscosmos.jpg", alt: "Роскосмос", name: "Роскосмос", key: "rosspace" },
     { src: "./img/partners/rosreestr.png", alt: "Росреестр", name: "Росреестр", key: "rosrosreestr" },
-    { src: "./img/partners/solar.jpg", alt: "Солар", name: "Солар", key: "solar" },
+    { src: "./img/partners/solar.jpg", alt: "Ростелеком Солар", name: "Ростелеком Солар", key: "solar" },
     { src: "./img/partners/eremex.jpg", alt: "Эремекс", name: "Эремекс", key: "eremex" }
 ];
 
@@ -148,7 +148,7 @@ function slideToNextRow() {
     const currentRow = track.querySelector('.partners-row');
     if (!currentRow) return;
     
-    const rowHeight = currentRow.offsetHeight;
+    const rowHeight = 236;
     
     const nextRowIndex = (currentPartnerRow + 1) % totalPartnerRows;
     const nextRowDiv = document.createElement("div");
@@ -310,6 +310,61 @@ updateDateTime();
 const API_KEY = "1df2eb92e9b510458f1e2edebaace0eb";
 const CITY = "Moscow";
 
+function getWeatherType(weatherData) {
+    if (!weatherData.weather || weatherData.weather.length === 0) {
+        return 'default';
+    }
+    
+    const weatherId = weatherData.weather[0].id;
+    const clouds = weatherData.clouds?.all || 0;
+    console.log(`Weather ID: ${weatherId}`)
+    if (weatherId >= 200 && weatherId < 300) {
+        return 'thunderstorm';
+    } else if (weatherId >= 300 && weatherId < 400) {
+        return 'rain';
+    } else if (weatherId >= 500 && weatherId < 600) {
+        return 'rain';
+    } else if (weatherId >= 600 && weatherId < 700) {
+        return 'snow';
+    } else if (weatherId >= 700 && weatherId < 800) {
+        return 'fog';
+    } else if (weatherId === 800) {
+        if (clouds < 20) {
+            return 'sunny';
+        } else {
+            return 'cloudy';
+        }
+    } else if (weatherId === 801) {
+        return 'cloudy';
+    } else if (weatherId === 802) {
+        return 'cloudy';
+    } else if (weatherId === 803 || weatherId === 804) {
+        return 'default';
+    }
+    
+    return 'default';
+}
+
+function updateWeatherIcon(weatherType) {
+    const weatherIcon = document.querySelector('.weather-icon img');
+    if (!weatherIcon) return;
+    
+    const iconMap = {
+        'sunny': 'weather-sunny.png',
+        'cloudy': 'weather-cloudy.png',
+        'rain': 'weather-rain.png',
+        'thunderstorm': 'weather-thunderstorm.png',
+        'snow': 'weather-snow.png',
+        'fog': 'weather-fog.png',
+        'default': 'weather-icon.png'
+    };
+    
+    const iconFile = iconMap[weatherType] || 'weather-icon.png';
+    weatherIcon.src = `./img/${iconFile}`;
+    weatherIcon.alt = `Иконка погоды: ${weatherType}`;
+    console.log(`Weather type: ${weatherType}`)
+}
+
 function fetchWeather() {
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&lang=ru&appid=${API_KEY}`
@@ -318,7 +373,7 @@ function fetchWeather() {
         .then((data) => {
             const temp = data.main?.temp;
             const feel = data.main?.feels_like;
-            const desc = data.weather?.[0]?.description || "";
+            const clouds = data.clouds?.all || 0;
 
             document.getElementById("weather-temp").textContent =
                 data.main
@@ -329,7 +384,6 @@ function fetchWeather() {
                 data.main
                     ? `по ощущениям ${(feel > 0 ? "+" : "") + Math.round(feel)}°`
                     : "";
-
 
             document.getElementById("weather-wind").textContent =
                 data.wind ? `${data.wind.speed} м/с` : "--";
@@ -352,11 +406,15 @@ function fetchWeather() {
                 formatTime(data.sys?.sunrise);
             document.getElementById("sunset").textContent =
                 formatTime(data.sys?.sunset);
+            
+            // Обновляем иконку погоды на основе облачности
+            const weatherType = getWeatherType(data);
+            updateWeatherIcon(weatherType);
         })
-        .catch(() => {
+        .catch((error) => {
+            console.error('Ошибка при получении погоды:', error);
             document.getElementById("weather-temp").textContent = "--";
             document.getElementById("weather-feel").textContent = "";
-            document.getElementById("weather-desc").textContent = "";
         });
 }
 fetchWeather();
