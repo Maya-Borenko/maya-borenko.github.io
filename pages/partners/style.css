@@ -56,15 +56,15 @@ body {
 .page {
     position: relative;
     z-index: 1;
-    max-width:1366px;
+    max-width: 1366px;
     margin: 0 auto;
-    padding: 20px 30px 30px;
+    padding: 20px 70px 30px 30px;
 }
 
 .header {
     display: grid;
     grid-template-columns: 1fr;
-    margin-bottom: 10px;
+    
 }
 
 .header-left {
@@ -261,20 +261,25 @@ body {
     pointer-events: none;
 }
 
+.weather-item img {
+    width: 15px;
+}
+
 .weather-item b {
     color: rgba(26, 89, 176, 1);
-    margin: 5px;
+    margin: 5px 0;
     font-weight: 500;
 }
 
 .weather-item span {
    font-weight: 100;
+   margin-left: 20px;
 }
 
 /* Блок новостей слева */
 .news-block {
     border-radius: 18px;
-    padding: 0 18px 16px;
+    padding: 0px 18px 16px;
     color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -401,7 +406,6 @@ body {
     text-decoration: none;
 }
 
-/* Партнёры + QR */
 .main-zone {
     width:37%;
     margin-top: 45px;
@@ -409,7 +413,7 @@ body {
     display: flex;
     flex-direction: column;
     grid-template-columns: 2fr 1.1fr;
-    padding: 0 18px;
+    padding: 0 10px;    
 }
 
 .partners-block {
@@ -429,7 +433,8 @@ body {
 .partners-slider {
     overflow: hidden;
     position: relative;
-    height:220px;
+    width: 747px;
+    height:236px;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.65);
 }
@@ -491,11 +496,13 @@ body {
 .partners-row {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     max-width: 730px;
     gap: 20px;
     padding: 0 0 0 30px;
     flex-wrap: nowrap;
+    flex-shrink: 0;
+    justify-content: space-between;
 }
 
 /* Пустая ячейка */
@@ -512,17 +519,19 @@ body {
 }
 
 .partner-cell {
-    flex: 0 0 22%;
+    flex: 0 0 160px;
     max-width: max-content;
-    height: auto;
-    padding: 30px 10px;
+    height: 216px;
+    padding: 15px 5px;
     text-align: center;
     cursor: pointer;
     color: #000;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: flex-start;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
 }
 
 .partner-cell img {
@@ -530,19 +539,29 @@ body {
     /* max-width: 100%;
     max-height: 70px; */
     align-self:center;
-    width: 8em;
-    height: 8em;
+    width: 120px;
+    height: 120px;
     border: 3px solid transparent;
     border-color: #000;
     border-radius: 16px;
     object-fit: contain;
     margin-bottom: 6px;
+    flex-shrink: 0;
 }
 
 .partner-name {
     text-align: center;
     font-size: 18px;
     font-weight: 500;
+    width: 100%;
+    max-height: 60px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-height: 1.2;
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .side-block {
