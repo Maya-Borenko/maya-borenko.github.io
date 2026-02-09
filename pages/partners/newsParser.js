@@ -5,82 +5,44 @@ let newsInterval;
 let isAnimating = false;
 const cardHeight = 150;
 
+const NEWS_JSON_URL = './news.json';
+
 async function getNews() {
     try {
-        const sheetId = '1mmrg6_cJ_TyYcA4uhYoAA6xpjtw_XLhzEdyGarw0csc';
-        
-        const proxyUrl = 'https://corsproxy.io/?';
-        const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
-        const url = proxyUrl + encodeURIComponent(sheetUrl);
-        
-        const response = await fetch(url);
+        const response = await fetch(NEWS_JSON_URL);
         
         if (!response.ok) {
             throw new Error(`Ошибка HTTP: ${response.status}`);
         }
         
-        const csvText = await response.text();
-        return parseCSV(csvText);
+        const jsonData = await response.json();
         
-    } catch (error) {
-        console.error('Ошибка при загрузке новостей:', error);
-        return getFallbackNews();
-    }
-}
-
-async function getNewsAlt() {
-    try {
-        const proxies = [
-            'https://api.codetabs.com/v1/proxy?quest=',
-            'https://corsproxy.io/?',
-            'https://proxy.cors.sh/'
-        ];
-        
-        const sheetId = '1mmrg6_cJ_TyYcA4uhYoAA6xpjtw_XLhzEdyGarw0csc';
-        const sheetUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
-        
-        for (const proxy of proxies) {
-            try {
-                const url = proxy + encodeURIComponent(sheetUrl);
-                const response = await fetch(url);
-                
-                if (response.ok) {
-                    const csvText = await response.text();
-                    const news = parseCSV(csvText);
-                    if (news.length > 0) return news;
-                }
-            } catch (e) {
-                console.log(`Прокси ${proxy} не сработал`);
-                continue;
-            }
+        if (!jsonData.news || !Array.isArray(jsonData.news)) {
+            throw new Error('Некорректный формат JSON: отсутствует массив news');
         }
         
-        throw new Error('Все прокси не сработали');
+        return parseJSONNews(jsonData.news);
         
     } catch (error) {
-        console.error('Ошибка:', error);
+        console.error('Ошибка при загрузке новостей из JSON:', error);
         return getFallbackNews();
     }
 }
 
-function parseCSV(csvText) {
-    const rows = csvText.split('\n');
+function parseJSONNews(newsArray) {
     const news = [];
     
-    for (let i = 0; i < rows.length; i++) {
-        const text = rows[i].trim();
-        
-        const cleanText = text.replace(/^"|"$/g, '');
-        
-        if (cleanText) {
+    newsArray.forEach((item, index) => {
+        if (item.text) {
             news.push({
-                id: i,
-                text: cleanText,
-                date: '',
-                link: '#'
+                id: index,
+                text: item.text,
+                date: item.date || '',
+                link: item.link || '#',
+                img: item.img || null
             });
         }
-    }
+    });
     
     return news;
 }
@@ -92,7 +54,21 @@ function displayCurrentNews() {
     }
     
     const news = newsData[currentNewsIndex];
-    document.getElementById('newsTitle').textContent = news.text;
+    const titleElement = document.getElementById('newsTitle');
+    const imgElement = document.getElementById('newsImage');
+    
+    if (!titleElement || !imgElement) return;
+    
+    titleElement.textContent = news.text;
+    
+    if (news.img) {
+        imgElement.src = news.img;
+        imgElement.alt = 'Картинка к новости';
+    } else {
+        imgElement.src = './img/test/loading.png';
+        imgElement.alt = 'Нет изображения';
+    }
+    
     updateNewsDots();
 }
 
@@ -164,77 +140,186 @@ function slideNewsDown(callback) {
     }
     
     const newsCard = document.getElementById('newsCard');
+    const newsContent = newsCard.querySelector('.news-content');
     const titleElement = document.getElementById('newsTitle');
+    const imgElement = document.getElementById('newsImage');
     
-    if (!newsCard || !titleElement) {
+    if (!newsCard || !newsContent || !titleElement || !imgElement) {
         if (callback) callback();
         return;
     }    
     
-    const currentText = titleElement.textContent;
-    
+    const currentNews = newsData[currentNewsIndex];
     const nextIndex = (currentNewsIndex + 1) % newsData.length;
-    const nextText = newsData[nextIndex].text;
+    const nextNews = newsData[nextIndex];
+    const newsCardWidth = newsCard.offsetWidth;
+    
+    
+    const textContainerWidth = newsCardWidth - 190 - 35;
     
     const animationContainer = document.createElement('div');
-    animationContainer.id = 'newsAnimationContainer';
+    animationContainer.className = 'news-content-animation';
     animationContainer.style.position = 'absolute';
     animationContainer.style.top = '0';
     animationContainer.style.left = '0';
-    animationContainer.style.width = '100%';
+    animationContainer.style.width = `${newsCardWidth}px`;
     animationContainer.style.height = `${cardHeight}px`;
     animationContainer.style.overflow = 'hidden';
     
-    const currentDiv = document.createElement('h3');
-    currentDiv.className = 'news-card-title current-news';
-    currentDiv.textContent = currentText;
-    currentDiv.style.position = 'absolute';
-    currentDiv.style.top = '0';
-    currentDiv.style.left = '0';
-    currentDiv.style.width = '100%';
-    currentDiv.style.height = `${cardHeight}px`;
-    currentDiv.style.margin = '0';
-    currentDiv.style.padding = '20px';
-    currentDiv.style.boxSizing = 'border-box';
-    currentDiv.style.display = 'flex';
-    currentDiv.style.transform = 'translateY(0)';
-    currentDiv.style.transition = `transform ${ANIMATION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+    const currentContent = document.createElement('div');
+    currentContent.className = 'news-content';
+    currentContent.style.position = 'absolute';
+    currentContent.style.top = '0';
+    currentContent.style.left = '0';
+    currentContent.style.width = `${newsCardWidth}px`;
+    currentContent.style.height = `${cardHeight}px`;
+    currentContent.style.display = 'flex';
+    currentContent.style.flexDirection = 'row';
+    currentContent.style.justifyContent = 'space-between';
+    currentContent.style.alignItems = 'stretch';
+    currentContent.style.transform = 'translateY(0)';
+    currentContent.style.transition = `transform ${ANIMATION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
     
-    const nextDiv = document.createElement('h3');
-    nextDiv.className = 'news-card-title next-news';
-    nextDiv.textContent = nextText;
-    nextDiv.style.position = 'absolute';
-    nextDiv.style.top = `${cardHeight}px`;
-    nextDiv.style.left = '0';
-    nextDiv.style.width = '100%';
-    nextDiv.style.height = `${cardHeight}px`;
-    nextDiv.style.margin = '0';
-    nextDiv.style.padding = '20px';
-    nextDiv.style.boxSizing = 'border-box';
-    nextDiv.style.display = 'flex';
-    nextDiv.style.transform = 'translateY(0)';
-    nextDiv.style.transition = `transform ${ANIMATION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+    const currentImg = document.createElement('img');
+    currentImg.id = 'newsImageTemp';
+    currentImg.src = currentNews.img || './img/test/loading.png';
+    currentImg.alt = currentNews.img ? 'Картинка к новости' : 'Нет изображения';
+    currentImg.style.borderRadius = '5px 0 0 5px';
+    currentImg.style.alignSelf = 'center';
+    currentImg.style.height = '100%';
+    currentImg.style.width = '190px';
+    currentImg.style.objectFit = 'cover';
+    currentImg.style.flexShrink = '0';
     
-    animationContainer.appendChild(currentDiv);
-    animationContainer.appendChild(nextDiv);
+    const currentText = document.createElement('div');
+    currentText.className = 'news-text';
+    currentText.style.width = `${textContainerWidth}px`;
+    currentText.style.height = '150px';
+    currentText.style.padding = '15px 18px';
+    currentText.style.flex = '1';
+    currentText.style.minWidth = '0';
+    currentText.style.overflow = 'hidden';
     
-    titleElement.style.visibility = 'hidden';
-    const newsContent = newsCard.querySelector('.news-content');
-    if (newsContent) {
-        newsContent.style.position = 'relative';
-        newsContent.appendChild(animationContainer);
-    }
+    const currentTitle = document.createElement('h3');
+    currentTitle.className = 'news-card-title';
+    currentTitle.textContent = currentNews.text;
+    currentTitle.style.margin = '0';
+    currentTitle.style.height = '100%';
+    currentTitle.style.fontSize = '22px';
+    currentTitle.style.fontWeight = '100';
+    currentTitle.style.overflow = 'hidden';
+    currentTitle.style.textAlign = 'justify';
+    currentTitle.style.display = '-webkit-box';
+    currentTitle.style.webkitLineClamp = '5';
+    currentTitle.style.webkitBoxOrient = 'vertical';
+    
+    currentText.appendChild(currentTitle);
+    
+    const currentDots = document.createElement('div');
+    currentDots.className = 'news-slider-dots';
+    currentDots.style.display = 'flex';
+    currentDots.style.flexDirection = 'column';
+    currentDots.style.alignSelf = 'center';
+    currentDots.style.alignItems = 'center';
+    currentDots.style.justifyContent = 'center';
+    currentDots.style.gap = '15px';
+    currentDots.style.padding = '20px 20px 20px 0';
+    currentDots.style.flexShrink = '0';
+    currentDots.style.width = '35px';
+    
+    currentContent.appendChild(currentImg);
+    currentContent.appendChild(currentText);
+    currentContent.appendChild(currentDots);
+    
+    const nextContent = document.createElement('div');
+    nextContent.className = 'news-content';
+    nextContent.style.position = 'absolute';
+    nextContent.style.top = `${cardHeight}px`;
+    nextContent.style.left = '0';
+    nextContent.style.width = `${newsCardWidth}px`;
+    nextContent.style.height = `${cardHeight}px`;
+    nextContent.style.display = 'flex';
+    nextContent.style.flexDirection = 'row';
+    nextContent.style.justifyContent = 'space-between';
+    nextContent.style.alignItems = 'stretch';
+    nextContent.style.transform = 'translateY(0)';
+    nextContent.style.transition = `transform ${ANIMATION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
+    
+    const nextImg = document.createElement('img');
+    nextImg.id = 'newsImageTempNext';
+    nextImg.src = nextNews.img || './img/test/loading.png';
+    nextImg.alt = nextNews.img ? 'Картинка к новости' : 'Нет изображения';
+    nextImg.style.borderRadius = '5px 0 0 5px';
+    nextImg.style.alignSelf = 'center';
+    nextImg.style.height = '100%';
+    nextImg.style.width = '190px';
+    nextImg.style.objectFit = 'cover';
+    nextImg.style.flexShrink = '0';
+    
+    const nextText = document.createElement('div');
+    nextText.className = 'news-text';
+    nextText.style.width = `${textContainerWidth}px`;
+    nextText.style.height = '150px';
+    nextText.style.padding = '15px 18px';
+    nextText.style.flex = '1';
+    nextText.style.minWidth = '0';
+    nextText.style.overflow = 'hidden';
+    
+    const nextTitle = document.createElement('h3');
+    nextTitle.className = 'news-card-title';
+    nextTitle.textContent = nextNews.text;
+    nextTitle.style.margin = '0';
+    nextTitle.style.height = '100%';
+    nextTitle.style.fontSize = '22px';
+    nextTitle.style.fontWeight = '100';
+    nextTitle.style.overflow = 'hidden';
+    nextTitle.style.textAlign = 'justify';
+    nextTitle.style.display = '-webkit-box';
+    nextTitle.style.webkitLineClamp = '5';
+    nextTitle.style.webkitBoxOrient = 'vertical';
+    
+    nextText.appendChild(nextTitle);
+    
+    const nextDots = document.createElement('div');
+    nextDots.className = 'news-slider-dots';
+    nextDots.style.display = 'flex';
+    nextDots.style.flexDirection = 'column';
+    nextDots.style.alignSelf = 'center';
+    nextDots.style.alignItems = 'center';
+    nextDots.style.justifyContent = 'center';
+    nextDots.style.gap = '15px';
+    nextDots.style.padding = '20px 20px 20px 0';
+    nextDots.style.flexShrink = '0';
+    nextDots.style.width = '35px';
+    
+    nextContent.appendChild(nextImg);
+    nextContent.appendChild(nextText);
+    nextContent.appendChild(nextDots);
+    
+    animationContainer.appendChild(currentContent);
+    animationContainer.appendChild(nextContent);
+    
+    newsContent.style.visibility = 'hidden';
+    newsCard.appendChild(animationContainer);
     
     setTimeout(() => {
-        currentDiv.style.transform = `translateY(-${cardHeight}px)`;
-        nextDiv.style.transform = `translateY(-${cardHeight}px)`;
+        currentContent.style.transform = `translateY(-${cardHeight}px)`;
+        nextContent.style.transform = `translateY(-${cardHeight}px)`;
     }, 50);
     
     setTimeout(() => {
-        titleElement.textContent = nextText;
-        titleElement.style.visibility = 'visible';
-        
         animationContainer.remove();
+        
+        titleElement.textContent = nextNews.text;
+        if (nextNews.img) {
+            imgElement.src = nextNews.img;
+            imgElement.alt = 'Картинка к новости';
+        } else {
+            imgElement.src = './img/test/loading.png';
+            imgElement.alt = 'Нет изображения';
+        }
+        
+        newsContent.style.visibility = 'visible';
         
         updateNewsDots();
         
@@ -270,34 +355,29 @@ function getFallbackNews() {
             id: 1,
             text: 'Ошибка загрузки новостей',
             date: '',
-            link: '#'
+            link: '#',
+            img: null
         }
     ];
 }
-
 
 async function initNews() {
     try {
         document.getElementById('newsTitle').textContent = 'Загрузка новостей...';
         
-        newsData = await getNewsAlt();
+        newsData = await getNews();
         
         if (newsData.length === 0) {
             console.log('Используем тестовые новости');
             newsData = getTestNews();
         }
         
-        setTimeout(() => {
-            const newsCard = document.getElementById('newsCard');
-            if (newsCard) {
-                const titleElement = document.getElementById('newsTitle');
-                if (titleElement) {
-                    newsCard.style.height = `${cardHeight}px`;
-                    newsCard.style.minHeight = `${cardHeight}px`;
-                    newsCard.style.overflow = 'hidden';
-                }
-            }
-        }, 100);
+        const newsCard = document.getElementById('newsCard');
+        if (newsCard) {
+            newsCard.style.height = `${cardHeight}px`;
+            newsCard.style.overflow = 'hidden';
+            newsCard.style.position = 'relative';
+        }
         
         createNewsDots();
         displayCurrentNews();
@@ -307,12 +387,9 @@ async function initNews() {
         
     } catch (error) {
         console.error('Ошибка при загрузке новостей:', error);
-        newsData = getTestNews();
+        newsData = getFallbackNews();
         createNewsDots();
         displayCurrentNews();
-        if (newsData.length > 1) {
-            startNewsSlider();
-        }
     }
 }
 
@@ -330,11 +407,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 setInterval(async () => {
     try {
-        const newNews = await getNewsAlt();
+        const newNews = await getNews();
         if (newNews.length > 0) {
+            const hadMultipleNews = newsData.length > 1;
             newsData = newNews;
             createNewsDots();
             displayCurrentNews();
+            
+            if (hadMultipleNews && newsData.length > 1) {
+                startNewsSlider();
+            }
         }
     } catch (error) {
         console.log('Не удалось обновить новости:', error);
