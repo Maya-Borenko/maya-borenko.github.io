@@ -59,7 +59,7 @@ function displayCurrentNews() {
     
     if (!titleElement || !imgElement) return;
     
-    titleElement.textContent = news.text;
+    titleElement.innerHTML = news.text;
     
     if (news.img) {
         imgElement.src = news.img;
@@ -202,7 +202,7 @@ function slideNewsDown(callback) {
     
     const currentTitle = document.createElement('h3');
     currentTitle.className = 'news-card-title';
-    currentTitle.textContent = currentNews.text;
+    currentTitle.innerHTML = currentNews.text;
     currentTitle.style.margin = '0';
     currentTitle.style.height = '100%';
     currentTitle.style.fontSize = '22px';
@@ -267,7 +267,7 @@ function slideNewsDown(callback) {
     
     const nextTitle = document.createElement('h3');
     nextTitle.className = 'news-card-title';
-    nextTitle.textContent = nextNews.text;
+    nextTitle.innerHTML = nextNews.text;
     nextTitle.style.margin = '0';
     nextTitle.style.height = '100%';
     nextTitle.style.fontSize = '22px';
@@ -310,7 +310,7 @@ function slideNewsDown(callback) {
     setTimeout(() => {
         animationContainer.remove();
         
-        titleElement.textContent = nextNews.text;
+        titleElement.innerHTML = nextNews.text;
         if (nextNews.img) {
             imgElement.src = nextNews.img;
             imgElement.alt = 'Картинка к новости';
