@@ -195,7 +195,7 @@ function slideNewsDown(callback) {
     currentText.className = 'news-text';
     currentText.style.width = `${textContainerWidth}px`;
     currentText.style.height = '150px';
-    currentText.style.padding = '15px 17px';
+    currentText.style.padding = '15px 16px';
     currentText.style.flex = '1';
     currentText.style.minWidth = '0';
     currentText.style.overflow = 'hidden';
@@ -258,7 +258,7 @@ function slideNewsDown(callback) {
     nextText.className = 'news-text';
     nextText.style.width = `${textContainerWidth}px`;
     nextText.style.height = '150px';
-    nextText.style.padding = '15px 17px';
+    nextText.style.padding = '15px 16px';
     nextText.style.flex = '1';
     nextText.style.minWidth = '0';
     nextText.style.overflow = 'hidden';
