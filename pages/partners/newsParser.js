@@ -155,7 +155,7 @@ function slideNewsDown(callback) {
     const newsCardWidth = newsCard.offsetWidth;
     
     
-    const textContainerWidth = newsCardWidth - 190 - 35;
+    const textContainerWidth = newsCardWidth - 150;
     
     const animationContainer = document.createElement('div');
     animationContainer.className = 'news-content-animation';
@@ -187,7 +187,7 @@ function slideNewsDown(callback) {
     currentImg.style.borderRadius = '5px 0 0 5px';
     currentImg.style.alignSelf = 'center';
     currentImg.style.height = '100%';
-    currentImg.style.width = '190px';
+    currentImg.style.width = '150px';
     currentImg.style.objectFit = 'cover';
     currentImg.style.flexShrink = '0';
     
@@ -195,7 +195,7 @@ function slideNewsDown(callback) {
     currentText.className = 'news-text';
     currentText.style.width = `${textContainerWidth}px`;
     currentText.style.height = '150px';
-    currentText.style.padding = '15px 18px';
+    currentText.style.padding = '15px 17px';
     currentText.style.flex = '1';
     currentText.style.minWidth = '0';
     currentText.style.overflow = 'hidden';
@@ -205,10 +205,9 @@ function slideNewsDown(callback) {
     currentTitle.innerHTML = currentNews.text;
     currentTitle.style.margin = '0';
     currentTitle.style.height = '100%';
-    currentTitle.style.fontSize = '22px';
+    currentTitle.style.fontSize = '20px';
     currentTitle.style.fontWeight = '100';
     currentTitle.style.overflow = 'hidden';
-    currentTitle.style.textAlign = 'justify';
     currentTitle.style.display = '-webkit-box';
     currentTitle.style.webkitLineClamp = '5';
     currentTitle.style.webkitBoxOrient = 'vertical';
@@ -225,7 +224,6 @@ function slideNewsDown(callback) {
     currentDots.style.gap = '15px';
     currentDots.style.padding = '20px 20px 20px 0';
     currentDots.style.flexShrink = '0';
-    currentDots.style.width = '35px';
     
     currentContent.appendChild(currentImg);
     currentContent.appendChild(currentText);
@@ -252,7 +250,7 @@ function slideNewsDown(callback) {
     nextImg.style.borderRadius = '5px 0 0 5px';
     nextImg.style.alignSelf = 'center';
     nextImg.style.height = '100%';
-    nextImg.style.width = '190px';
+    nextImg.style.width = '150px';
     nextImg.style.objectFit = 'cover';
     nextImg.style.flexShrink = '0';
     
@@ -260,7 +258,7 @@ function slideNewsDown(callback) {
     nextText.className = 'news-text';
     nextText.style.width = `${textContainerWidth}px`;
     nextText.style.height = '150px';
-    nextText.style.padding = '15px 18px';
+    nextText.style.padding = '15px 17px';
     nextText.style.flex = '1';
     nextText.style.minWidth = '0';
     nextText.style.overflow = 'hidden';
@@ -270,10 +268,9 @@ function slideNewsDown(callback) {
     nextTitle.innerHTML = nextNews.text;
     nextTitle.style.margin = '0';
     nextTitle.style.height = '100%';
-    nextTitle.style.fontSize = '22px';
+    nextTitle.style.fontSize = '20px';
     nextTitle.style.fontWeight = '100';
     nextTitle.style.overflow = 'hidden';
-    nextTitle.style.textAlign = 'justify';
     nextTitle.style.display = '-webkit-box';
     nextTitle.style.webkitLineClamp = '5';
     nextTitle.style.webkitBoxOrient = 'vertical';
@@ -290,7 +287,6 @@ function slideNewsDown(callback) {
     nextDots.style.gap = '15px';
     nextDots.style.padding = '20px 20px 20px 0';
     nextDots.style.flexShrink = '0';
-    nextDots.style.width = '35px';
     
     nextContent.appendChild(nextImg);
     nextContent.appendChild(nextText);
