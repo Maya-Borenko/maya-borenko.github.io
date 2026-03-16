@@ -287,13 +287,13 @@ body {
 .news-text{
     width:100%;
     height:150px;
-    padding: 15px 18px;
+    padding: 15px 16px;
 }
 #newsImage{
     border-radius: 5px 0 0 5px;
     align-self: center;
     height:100%;
-    width: 190px;
+    width: 150px;
 }
 
 /* Стиль к точкам-слайдерам */
@@ -390,7 +390,7 @@ body {
 .news-card-title {
     margin:0;
     height:100%;
-    font-size: 21px;
+    font-size: 19px;
     font-weight: 100;
     overflow: hidden;
 }
