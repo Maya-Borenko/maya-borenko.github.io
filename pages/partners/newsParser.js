@@ -186,7 +186,7 @@ function slideNewsDown(callback) {
     currentImg.alt = currentNews.img ? 'Картинка к новости' : 'Нет изображения';
     currentImg.style.borderRadius = '5px 0 0 5px';
     currentImg.style.alignSelf = 'center';
-    currentImg.style.height = '100%';
+    
     currentImg.style.width = '150px';
     currentImg.style.objectFit = 'cover';
     currentImg.style.flexShrink = '0';
@@ -249,7 +249,7 @@ function slideNewsDown(callback) {
     nextImg.alt = nextNews.img ? 'Картинка к новости' : 'Нет изображения';
     nextImg.style.borderRadius = '5px 0 0 5px';
     nextImg.style.alignSelf = 'center';
-    nextImg.style.height = '100%';
+    
     nextImg.style.width = '150px';
     nextImg.style.objectFit = 'cover';
     nextImg.style.flexShrink = '0';
