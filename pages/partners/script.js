@@ -25,7 +25,9 @@ const partnersAll = [
     { src: "./img/partners/solar.jpg", alt: "Ростелеком Солар", name: "Ростелеком Солар", key: "solar" },
     { src: "./img/partners/eremex.jpg", alt: "Эремекс", name: "Эремекс", key: "eremex" },
     { src: "./img/partners/kurchatov_institute.png", alt: "Курчатовский институт", name: "Курчатовский институт", key: "kurchatov_institute"},
-    { src: "./img/partners/uchim_znayem.png", alt: "УчимЗнаем", name: "УчимЗнаем", key: "uchim_znayem"}
+    { src: "./img/partners/uchim_znayem.png", alt: "УчимЗнаем", name: "УчимЗнаем", key: "uchim_znayem"},
+    { src: "./img/partners/cyberproect.png", alt: "Киберпротект", name: "Киберпротект", key: "cyberprotect"},
+    { src: "./img/partners/rtk.png", alt: "ЦНИИ РТК", name: "ЦНИИ РТК", key: "tsnii_rtc"}
 ];
 
 const partnersDescriptions = {
