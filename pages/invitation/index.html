@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Приглашение</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #f6e9e0;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
+        background-size: 200px 200px;
+        font-family: "Georgia", "Times New Roman", serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .collage {
+        position: relative;
+        max-width: 700px;
+        width: 100%;
+        background: #fffbf7;
+        box-shadow:
+          8px 8px 20px rgba(0, 0, 0, 0.1),
+          -2px -2px 10px rgba(255, 255, 255, 0.8);
+        border-radius: 2px 20px 2px 20px;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 1.5rem;
+        transform: rotate(-0.5deg);
+        border: 1px solid #e6d3c8;
+      }
+
+      .paper-piece {
+        background: #ffffff;
+        box-shadow:
+          4px 4px 8px rgba(0, 0, 0, 0.08),
+          -1px -1px 4px rgba(255, 255, 255, 0.6);
+        position: relative;
+        padding: 1rem;
+        transform: rotate(var(--rot, 0deg));
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        border: 1px solid #f0d9da;
+      }
+      .paper-piece:hover {
+        transform: rotate(0deg) scale(1.02);
+        box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.12);
+      }
+
+      .tape {
+        position: absolute;
+        width: 60px;
+        height: 20px;
+        background: rgba(255, 220, 210, 0.7);
+        opacity: 0.8;
+        top: -8px;
+        left: 20px;
+        transform: rotate(-2deg);
+        filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.1));
+      }
+      .tape.right {
+        left: auto;
+        right: 20px;
+        transform: rotate(3deg);
+      }
+
+      .photo-card {
+        background: #fff;
+        padding: 8px;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+        border-radius: 2px;
+        transform: rotate(var(--rot, 0deg));
+        position: relative;
+      }
+      .photo-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+        filter: sepia(0.15) brightness(1.02);
+      }
+
+      .handwritten {
+        font-family:
+          "Brush Script MT", "Bradley Hand", cursive, "Georgia", serif;
+        font-size: 1.8rem;
+        color: #b3446c;
+        line-height: 1.3;
+        text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+      }
+      .small-writing {
+        font-family: "Segoe Print", "Comic Sans MS", cursive, sans-serif;
+        font-size: 1rem;
+        color: #6b4e57;
+        transform: rotate(-1deg);
+      }
+
+      .title-area {
+        grid-column: 1 / -1;
+        text-align: center;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        transform: rotate(0.5deg);
+      }
+      .title-area .paper-piece {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        background: #fff6f0;
+      }
+
+      .sticker-btn {
+        grid-column: 1 / -1;
+        justify-self: center;
+        background: #fadadd;
+        border: 1px dashed #b3446c;
+        padding: 0.8rem 2.5rem;
+        font-family: "Georgia", serif;
+        font-size: 1.4rem;
+        color: #b3446c;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 rgba(179, 68, 108, 0.2);
+        transition: all 0.2s;
+        transform: rotate(1deg);
+        background-image: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.5) 10%,
+          transparent 60%
+        );
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .sticker-btn:hover {
+        box-shadow: 5px 5px 0 rgba(179, 68, 108, 0.3);
+        transform: rotate(0deg) scale(1.02);
+      }
+      .sticker-btn:active {
+        transform: rotate(0deg) scale(0.98);
+      }
+
+      .hidden-message {
+        grid-column: 1 / -1;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: 0.5s ease;
+        font-size: 1.2rem;
+        color: #b3446c;
+      }
+      .hidden-message.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .confetti-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(-100%) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 550px) {
+        .collage {
+          grid-template-columns: 1fr;
+          transform: rotate(0);
+        }
+        .handwritten {
+          font-size: 1.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="collage">
+      <div class="title-area">
+        <div class="paper-piece" style="--rot: -2deg">
+          <div class="tape"></div>
+          <div class="tape right"></div>
+          <span class="handwritten">Дорогая Рита!</span>
+        </div>
+      </div>
+
+      <!-- Левая колонка -->
+      <div class="paper-piece" style="--rot: 2deg">
+        <div class="tape"></div>
+        <p class="small-writing" style="margin-bottom: 0.8rem">
+          Мы приглашаем тебя на вечеринку в честь нового этапа твоей жизни!!!<br />
+          Твоя карета будет ждать тебя возле твоегое дома
+          <strong>20 июня в 16:00</strong>.<br />
+          Dress-code: выглядеть шикарно и иметь при себе хорошее настроение (и
+          пижаму)
+        </p>
+        <p class="small-writing" style="font-size: 0.9rem; color: #b37070">
+          P.S. Будем жестко провожать тебя в семейную жизнь!
+        </p>
+      </div>
+
+      <div class="photo-card" style="--rot: -4deg">
+        <div class="tape" style="width: 50px; top: -12px; left: 10px"></div>
+        <img
+          src="./img/friends.jpg"
+          alt="Наша фотка"
+          style="border: 1px solid #f0d9da"
+        />
+      </div>
+
+      <!-- Левая нижняя фотография -->
+      <div class="photo-card" style="--rot: 3deg; margin-top: -1rem">
+        <div class="tape right" style="width: 60px; top: -10px"></div>
+        <img
+          src="./img/food.jpg"
+          alt="Розовые розы"
+          style="border: 1px solid #f0d9da"
+        />
+      </div>
+
+      <!-- Правая нижняя фотография -->
+      <div class="photo-card" style="--rot: -2deg">
+        <div class="tape" style="width: 55px; top: -9px; left: 40%"></div>
+        <img
+          src="./img/img3.jpg"
+          alt="Праздничные бокалы"
+          style="border: 1px solid #f0d9da"
+        />
+      </div>
+
+      <button class="sticker-btn" id="acceptBtn">Я в деле!</button>
+      <div class="hidden-message" id="message"></div>
+    </div>
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <script>
+      const btn = document.getElementById("acceptBtn");
+      const msg = document.getElementById("message");
+      const confettiContainer = document.getElementById("confettiContainer");
+
+      btn.addEventListener("click", function () {
+        msg.textContent = "Мы знали, что ты согласишься!";
+        msg.classList.add("show");
+
+        createPaperConfetti();
+
+        btn.disabled = true;
+        btn.textContent = "Спасибо!";
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = "Я в деле!";
+          msg.classList.remove("show");
+        }, 4000);
+      });
+
+      function createPaperConfetti() {
+        const colors = [
+          "#fadadd",
+          "#f4c2c2",
+          "#f0b3b3",
+          "#ffd6e8",
+          "#e6b3c8",
+          "#d699b0",
+          "#c97d99",
+        ];
+        for (let i = 0; i < 70; i++) {
+          const piece = document.createElement("div");
+          piece.style.position = "absolute";
+          piece.style.left = Math.random() * 100 + "%";
+          piece.style.top = -(Math.random() * 20 + 10) + "px";
+          piece.style.width = Math.random() * 15 + 8 + "px";
+          piece.style.height = Math.random() * 15 + 8 + "px";
+          piece.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+          piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+          piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+          piece.style.animation = `confettiFall ${Math.random() * 2 + 2}s ease-out forwards`;
+          piece.style.boxShadow = "1px 1px 2px rgba(0,0,0,0.1)";
+          piece.style.opacity = 0.9;
+          confettiContainer.appendChild(piece);
+
+          setTimeout(() => piece.remove(), 2500);
+        }
+      }
+    </script>
+  </body>
+</html>
