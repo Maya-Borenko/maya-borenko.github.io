@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+  <defs>
+    <radialGradient id="cornerA" cx="0" cy="0" r="1" gradientTransform="translate(0 0) rotate(43) scale(650 510)" gradientUnits="userSpaceOnUse"><stop stop-color="#DDF7FF" stop-opacity=".19"/><stop offset=".48" stop-color="#DDF7FF" stop-opacity=".07"/><stop offset="1" stop-color="#DDF7FF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="cornerB" cx="0" cy="0" r="1" gradientTransform="translate(1920 1080) rotate(223) scale(620 470)" gradientUnits="userSpaceOnUse"><stop stop-color="#DDF7FF" stop-opacity=".14"/><stop offset="1" stop-color="#DDF7FF" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#cornerA)"/>
+  <rect width="1920" height="1080" fill="url(#cornerB)"/>
+  <g fill="#E9FAFF" opacity=".10">
+    <path d="M300 168L315 204L351 219L315 234L300 270L285 234L249 219L285 204L300 168Z"/>
+    <path d="M1660 735L1672 763L1700 775L1672 787L1660 815L1648 787L1620 775L1648 763L1660 735Z"/>
+    <path d="M1510 120L1520 143L1543 153L1520 163L1510 186L1500 163L1477 153L1500 143L1510 120Z"/>
+  </g>
+  <g stroke="#EAFBFF" stroke-opacity=".14" stroke-width="2" stroke-linecap="round">
+    <path d="M0 0C100 45 151 103 199 170M0 0C56 112 73 199 82 285M0 0C130 30 218 27 310 0"/>
+    <path d="M1920 1080C1819 1035 1768 977 1720 910M1920 1080C1864 968 1847 881 1838 795M1920 1080C1790 1050 1702 1053 1610 1080"/>
+  </g>
+</svg>

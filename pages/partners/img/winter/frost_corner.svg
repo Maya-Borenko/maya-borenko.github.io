@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="300" viewBox="0 0 360 300" fill="none">
+  <defs>
+    <linearGradient id="frost" x1="10" y1="15" x2="310" y2="270" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFFFF" stop-opacity=".9"/><stop offset=".55" stop-color="#DDF5FF" stop-opacity=".48"/><stop offset="1" stop-color="#B6E1F3" stop-opacity="0"/></linearGradient>
+    <radialGradient id="mist" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(6 5) rotate(42) scale(325 250)"><stop stop-color="#FFFFFF" stop-opacity=".32"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+    <filter id="mistBlur"
+        x="-20%" y="-20%"
+        width="140%" height="140%">
+    <feGaussianBlur stdDeviation="10"/>
+</filter>
+  </defs>
+  <path d="M0 0H360C301 24 267 44 238 79C205 119 190 164 152 198C112 234 66 258 0 300V0Z"
+      fill="url(#mist)"
+      filter="url(#mistBlur)"/>
+  <g stroke="url(#frost)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 18C59 41 83 65 111 98C145 138 156 175 194 206" stroke-width="4"/>
+    <path d="M18 0C48 55 62 92 72 139C83 190 81 233 96 280" stroke-width="3"/>
+    <path d="M0 86C40 102 73 121 105 151C138 181 164 214 181 255" stroke-width="2.5"/>
+    <path d="M38 0C82 29 113 48 153 57C194 67 226 61 265 43" stroke-width="2.2"/>
+    <path d="M105 98L83 91L72 69M105 98L109 73L126 60M72 139L48 127L36 105M72 139L91 124L112 124M96 280L81 255L84 235M96 280L112 258L132 253" stroke-width="2.2"/>
+    <path d="M153 57L147 34L160 15M153 57L177 48L195 57M194 206L173 198L160 178M194 206L216 193L237 196" stroke-width="2.2"/>
+    <path d="M238 79L225 59L229 39M238 79L260 69L278 79" stroke-width="2"/>
+  </g>
+  <g stroke="#FFFFFF" stroke-opacity=".78" stroke-width="1.7" stroke-linecap="round">
+    <path d="M72 69L58 62M72 69L70 54M126 60L128 44M126 60L142 58M36 105L22 96M36 105L31 88M112 124L122 108M112 124L130 128M84 235L67 223M84 235L82 215M132 253L148 240M132 253L151 258M160 15L149 7M160 15L176 9M195 57L207 43M195 57L212 67M160 178L146 165M160 178L179 173M237 196L251 181M237 196L258 204M278 79L293 65M278 79L298 88"/>
+  </g>
+  <g fill="#FFFFFF" opacity=".75"><circle cx="30" cy="30" r="3"/><circle cx="119" cy="104" r="2.5"/><circle cx="179" cy="145" r="2"/><circle cx="59" cy="190" r="2.5"/><circle cx="230" cy="36" r="2.3"/></g>
+</svg>

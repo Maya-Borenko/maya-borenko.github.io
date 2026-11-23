@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="250" viewBox="0 0 1600 250" fill="none">
+  <defs>
+    <linearGradient id="wire" x1="0" y1="0" x2="1600" y2="100" gradientUnits="userSpaceOnUse"><stop stop-color="#CBB57B"/><stop offset=".5" stop-color="#FFF0C2"/><stop offset="1" stop-color="#C5A765"/></linearGradient>
+    <linearGradient id="needle" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#62A995"/><stop offset="1" stop-color="#0C4E4A"/></linearGradient>
+    <radialGradient id="gold" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(-3 -4) rotate(50) scale(15)"><stop stop-color="#FFFDF0"/><stop offset=".35" stop-color="#FFE8A0"/><stop offset="1" stop-color="#DCA13A"/></radialGradient>
+    <radialGradient id="ice" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(-3 -4) rotate(50) scale(14)"><stop stop-color="#FFFFFF"/><stop offset=".38" stop-color="#DDF7FF"/><stop offset="1" stop-color="#70C2E1"/></radialGradient>
+    <filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="5"/></filter>
+    <g id="sprig" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 0C24 -5 54 -2 96 14" stroke="#0A4C46" stroke-width="3.4"/>
+      <path d="M12 -2L1 -18M20 -3L11 -22M29 -3L23 -20M39 -2L35 -18M49 0L48 -16M60 3L62 -12M72 7L77 -7M83 10L91 -2" stroke="url(#needle)" stroke-width="4.1"/>
+      <path d="M12 -2L2 11M21 -3L12 14M31 -2L25 16M41 -1L38 18M52 1L52 20M63 4L67 21M75 8L83 22M86 12L98 24" stroke="#2E806D" stroke-width="3.7"/>
+      <path d="M4 -13L12 -2L21 -3L31 -2L41 -1L52 1L63 4L75 8L86 12" stroke="#A2D4C1" stroke-opacity=".5" stroke-width="1.2"/>
+    </g>
+    <g id="ornGold"><path d="M0 -23V-15" stroke="#E8D39A" stroke-width="2"/><path d="M-5 -16H5L4 -11H-4Z" fill="#D4B574"/><circle r="12" fill="url(#gold)" stroke="#FFF1C6" stroke-opacity=".8"/></g>
+    <g id="ornIce"><path d="M0 -21V-14" stroke="#D5E8EF" stroke-width="2"/><path d="M-4 -15H4L3 -11H-3Z" fill="#B6DCE7"/><circle r="10" fill="url(#ice)" stroke="#FFFFFF" stroke-opacity=".75"/></g>
+  </defs>
+  <!-- Light cable -->
+  <path d="M0 -24
+  C24 5 42 32 82 49
+  C121 64 166 64 210 63
+  C326 91 410 88 500 70
+  C688 47 770 77 934 93
+  C1127 112 1301 49 1498 29
+  C1544 17 1578 -7 1600 -30"
+  stroke="#073C48" stroke-opacity=".38" stroke-width="5"/>
+  <path d="M0 -28
+  C24 1 42 28 82 45
+  C121 60 166 60 210 59
+  C326 87 410 84 500 66
+  C688 43 770 73 934 89
+  C1127 108 1301 45 1498 25
+  C1544 13 1578 -11 1600 -34"
+  stroke="url(#wire)" stroke-width="2.5"/>
+
+  <!-- Evergreen: overlapping short boughs form a garland without becoming a solid heavy band -->
+  <g opacity=".98">
+    <use xlink:href="#sprig" transform="translate(5 40) rotate(15) scale(1.02)"/>
+    <use xlink:href="#sprig" transform="translate(86 51) rotate(8) scale(.88)"/>
+    <use xlink:href="#sprig" transform="translate(180 61) rotate(20) scale(.78)"/>
+    <use xlink:href="#sprig" transform="translate(290 73) rotate(10) scale(.72)"/>
+    <use xlink:href="#sprig" transform="translate(405 72) rotate(2) scale(.68)"/>
+    <use xlink:href="#sprig" transform="translate(520 63) rotate(5) scale(.7)"/>
+    <use xlink:href="#sprig" transform="translate(635 53) rotate(7) scale(.68)"/>
+    <use xlink:href="#sprig" transform="translate(750 61) rotate(13) scale(.68)"/>
+    <use xlink:href="#sprig" transform="translate(868 80) rotate(8) scale(.7)"/>
+    <use xlink:href="#sprig" transform="translate(990 91) rotate(-5) scale(.7)"/>
+    <use xlink:href="#sprig" transform="translate(1110 83) rotate(-10) scale(.7)"/>
+    <use xlink:href="#sprig" transform="translate(1230 66) rotate(-8) scale(.72)"/>
+    <use xlink:href="#sprig" transform="translate(1350 53) rotate(-5) scale(.78)"/>
+    <use xlink:href="#sprig" transform="translate(1450 53) rotate(175) scale(.9)"/>
+    <use xlink:href="#sprig" transform="translate(1530 50) rotate(190) scale(1.05)"/>
+  </g>
+  <!-- A few crossing tips at the ends -->
+  <g opacity=".82">
+    <use xlink:href="#sprig" transform="translate(28 75) rotate(35) scale(.72)"/>
+    <use xlink:href="#sprig" transform="translate(1570 82) rotate(205) scale(.75)"/>
+  </g>
+  <!-- Warm and icy bulbs -->
+  <g>
+    <circle cx="210" cy="53" r="17" fill="#FFE7A0" opacity=".22" filter="url(#glow)"/><circle cx="210" cy="53" r="6.5" fill="url(#gold)" stroke="#FFF4CF" stroke-width=".8"/>
+    <circle cx="382" cy="70" r="16" fill="#DDF7FF" opacity=".18" filter="url(#glow)"/><circle cx="382" cy="70" r="5.8" fill="url(#ice)" stroke="#FFFFFF" stroke-width=".8"/>
+    <circle cx="555" cy="57" r="17" fill="#FFE7A0" opacity=".22" filter="url(#glow)"/><circle cx="555" cy="57" r="6.5" fill="url(#gold)" stroke="#FFF4CF" stroke-width=".8"/>
+    <circle cx="725" cy="54" r="16" fill="#DDF7FF" opacity=".18" filter="url(#glow)"/><circle cx="725" cy="54" r="5.8" fill="url(#ice)" stroke="#FFFFFF" stroke-width=".8"/>
+    <circle cx="900" cy="81" r="17" fill="#FFE7A0" opacity=".22" filter="url(#glow)"/><circle cx="900" cy="81" r="6.5" fill="url(#gold)" stroke="#FFF4CF" stroke-width=".8"/>
+    <circle cx="1070" cy="82" r="16" fill="#DDF7FF" opacity=".18" filter="url(#glow)"/><circle cx="1070" cy="82" r="5.8" fill="url(#ice)" stroke="#FFFFFF" stroke-width=".8"/>
+    <circle cx="1240" cy="68" r="17" fill="#FFE7A0" opacity=".22" filter="url(#glow)"/><circle cx="1240" cy="68" r="6.5" fill="url(#gold)" stroke="#FFF4CF" stroke-width=".8"/>
+    <circle cx="1410" cy="52" r="16" fill="#DDF7FF" opacity=".18" filter="url(#glow)"/><circle cx="1410" cy="52" r="5.8" fill="url(#ice)" stroke="#FFFFFF" stroke-width=".8"/>
+  </g>
+  <use xlink:href="#ornGold" transform="translate(292 69) scale(.82)"/>
+  <use xlink:href="#ornIce" transform="translate(790 74) scale(.8)"/>
+  <use xlink:href="#ornGold" transform="translate(1330 60) scale(.88)"/>
+  <g fill="#FFFFFF" opacity=".78"><circle cx="66" cy="118" r="2.2"/><circle cx="122" cy="105" r="1.6"/><circle cx="1516" cy="117" r="2"/><circle cx="1460" cy="105" r="1.5"/><circle cx="315" cy="108" r="1.5"/><circle cx="1280" cy="112" r="1.8"/></g>
+</svg>
