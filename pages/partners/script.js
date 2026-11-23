@@ -152,13 +152,17 @@ function slideToNextRow() {
     const currentRow = track.querySelector('.partners-row');
     if (!currentRow) return;
     
-    const rowHeight = 236;
+    const trackStyle = getComputedStyle(track);
+    const rowGap = parseFloat(trackStyle.rowGap) || 0;
+
+    const slideStep = currentRow.offsetHeight + rowGap;
+    const nextRowTop = currentRow.offsetTop + slideStep;
     
     const nextRowIndex = (currentPartnerRow + 1) % totalPartnerRows;
     const nextRowDiv = document.createElement("div");
     nextRowDiv.className = "partners-row next-row";
     nextRowDiv.style.position = "absolute";
-    nextRowDiv.style.top = `${rowHeight}px`;
+    nextRowDiv.style.top = `${nextRowTop}px`;
     nextRowDiv.style.left = "0";
     nextRowDiv.style.width = "100%";
     
@@ -187,7 +191,7 @@ function slideToNextRow() {
     track.appendChild(nextRowDiv);
     
     track.style.transition = `transform ${ANIMATION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-    track.style.transform = `translateY(-${rowHeight}px)`;
+    track.style.transform = `translateY(-${slideStep}px)`;
 
     setTimeout(() => {
         currentPartnerRow = nextRowIndex;

@@ -1,0 +1,134 @@
+/* ==========================================================
+   ЗИМНЕЕ ОФОРМЛЕНИЕ ДЕТСКОГО ТЕХНОПАРКА «АЛЬТАИР»
+   Подключается отдельным файлом после style.css.
+   Исходные style.css и script.js менять не требуется.
+   ========================================================== */
+
+/* 1. Морозный декоративный слой на фоне всей страницы.
+   .bg-word уже существует в index.html и находится за .page. */
+.bg-word {
+    background-image:
+        url("./img/winter/background_frost_overlay.svg"),
+        radial-gradient(circle at top left, #0d6efd33, transparent 70%);
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center, top left;
+    background-size: cover, auto;
+    opacity: 0.36;
+}
+
+/* 2. Морозные ветви в нижних углах экрана.
+   Используем два псевдоэлемента существующего .bg-word.
+   Оригинальный frost_corner.svg нарисован для верхнего левого угла:
+   отражение по вертикали и по обеим осям переносит его вниз. */
+.bg-word::before,
+.bg-word::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("./img/winter/frost_corner.svg");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: clamp(165px, 17vw, 275px) auto;
+    opacity: 0.76;
+    pointer-events: none;
+}
+
+/* Левый нижний угол */
+.bg-word::before {
+    transform: scaleY(-1);
+    transform-origin: center;
+}
+
+/* Правый нижний угол */
+.bg-word::after {
+    transform: scale(-1, -1);
+    transform-origin: center;
+}
+
+/* 3. Гирлянда вдоль верхней части экрана.
+   SVG имеет прозрачное пространство снизу, поэтому его можно
+   разместить в компактной области, не закрывая заголовок. */
+.page::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: -2vw;
+    width: 104vw;
+    height: clamp(90px, 9.2vw, 148px);
+    background-image: url("./img/winter/garland_top.svg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 100% 100%;
+    z-index: 20;
+    pointer-events: none;
+}
+
+/* 4. Морозный узор в правом верхнем углу карточки новости.
+   У .news-card уже занят ::before для стеклянной рамки,
+   поэтому декоративный узор размещаем через ::after. */
+.news-card {
+    position: relative;
+    isolation: isolate;
+}
+
+.news-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(175px, 30%);
+    aspect-ratio: 1.2 / 1;
+    background-image: url("./img/winter/frost_corner.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    opacity: 0.28;
+    transform: scaleX(-1);
+    transform-origin: center;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Контент новости и точки должны оставаться поверх морозного узора. */
+.news-card .news-content,
+.news-card .news-slider-dots {
+    position: relative;
+    z-index: 1;
+}
+
+/* Сохраняем стеклянную рамку поверх декора и контента.
+   Ранее ::before уже создавал эту рамку, но не имел своего z-index. */
+.news-card::before {
+    z-index: 2;
+}
+
+/* На узких экранах декоративные углы немного уменьшаются. */
+@media (max-width: 800px) {
+    .bg-word::before,
+    .bg-word::after {
+        background-size: 155px auto;
+        opacity: 0.62;
+    }
+
+    .news-card::after {
+        width: 112px;
+        opacity: 0.38;
+    }
+}
+
+/* ДОБАВИТЬ В КОНЕЦ СУЩЕСТВУЮЩЕГО winter.css */
+
+/*
+   Canvas создаётся автоматически файлом winter.js.
+   Он располагается поверх фонового .bg-word, но под .page,
+   поэтому снежинки не перекрывают текст, логотипы и карточки.
+*/
+#winterSnowCanvas {
+    position: fixed;
+    inset: 0;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
