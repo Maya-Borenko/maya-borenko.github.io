@@ -684,5 +684,4 @@ function fetchWeather() {
 }
 
 fetchWeather();
-
 setInterval(fetchWeather, 600000);
